@@ -5,7 +5,6 @@ load_dotenv()
 import os
 repo_name_var = os.getenv("DAGSHUB_REPO_NAME")
 repo_owner_var = os.getenv("DAGSHUB_REPO_OWNER")
-tracking_uri_var = os.getenv("MLFLOW_TRACKING_URI")
 dagshub_token_var = os.getenv("DAGSHUB_TOKEN")
 dagshub_username_var = os.getenv("DAGSHUB_USERNAME")
 
@@ -17,7 +16,6 @@ import dagshub
 import mlflow
 
 dagshub.init(repo_owner=repo_owner_var, repo_name=repo_name_var, mlflow=True)
-mlflow.set_tracking_uri(tracking_uri_var)
 with mlflow.start_run():
     # Load libraries
     from numpy import loadtxt
@@ -50,7 +48,7 @@ with mlflow.start_run():
     print("Accuracy: %.2f%%" % (accuracy * 100.0))
 
     mlflow.log_param('accuracy', accuracy)
-    mlflow.log_metric("metric name", 1)
+    mlflow.log_metric("Test", 1)
     mlflow.log_artifact("xgboost_test.py")
 
     mlflow.end_run()
