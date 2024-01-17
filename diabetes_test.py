@@ -59,6 +59,6 @@ with mlflow.start_run() as run:
     
     # Log metrics
     # Här loggar vi metrics till MLflow. Accuracy, recall och precision loggas automatiskt innan
-    MlflowClient().log_artifact(run_id, 'xgboost_test.py')
+    MlflowClient().log_artifact(run_id, 'diabetes_test.py')
 
     
