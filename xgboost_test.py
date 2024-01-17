@@ -1,5 +1,6 @@
 # Load environment variables
 from dotenv import load_dotenv
+from sklearn.metrics import recall_score
 load_dotenv()
 
 import os
@@ -16,39 +17,39 @@ import dagshub
 import mlflow
 
 dagshub.init(repo_owner=repo_owner_var, repo_name=repo_name_var, mlflow=True)
-with mlflow.start_run():
-    # Load libraries
-    from numpy import loadtxt
-    from xgboost import XGBClassifier
-    from sklearn.model_selection import train_test_split
-    from sklearn.metrics import accuracy_score
+mlflow.xgboost.autolog()
+# Load libraries
+from numpy import loadtxt
+from xgboost import XGBClassifier
+from sklearn.model_selection import train_test_split
+from sklearn.metrics import accuracy_score
 
-    # load data
-    dataset = loadtxt('pima-indians-diabetes.csv', delimiter=",")
+# load data
+dataset = loadtxt('pima-indians-diabetes.csv', delimiter=",")
 
-    # split data into X and y
-    X = dataset[:,0:8]
-    Y = dataset[:,8]
+# split data into X and y
+X = dataset[:,0:8]
+Y = dataset[:,8]
 
-    # split data into train and test sets
-    seed = 7
-    test_size = 0.33
-    X_train, X_test, y_train, y_test = train_test_split(X, Y, test_size=test_size, random_state=seed)
+# split data into train and test sets
+seed = 7
+test_size = 0.33
+X_train, X_test, y_train, y_test = train_test_split(X, Y, test_size=test_size, random_state=seed)
 
-    # fit model on training data
-    model = XGBClassifier()
-    model.fit(X_train, y_train)
+# fit model on training data
+model = XGBClassifier(use_label_encoder=False, eval_metric="logloss")
+model.fit(X_train, y_train)
 
-    # make predictions for test data
-    y_pred = model.predict(X_test)
-    predictions = [round(value) for value in y_pred]
+# make predictions for test data
+y_pred = model.predict(X_test)
 
-    # evaluate predictions
-    accuracy = accuracy_score(y_test, predictions)
-    print("Accuracy: %.2f%%" % (accuracy * 100.0))
+# evaluate predictions
+accuracy = accuracy_score(y_test, y_pred)
+recall = recall_score(y_test, y_pred)
 
-    mlflow.log_param('accuracy', accuracy)
-    mlflow.log_metric("Test", 1)
-    mlflow.log_artifact("xgboost_test.py")
+print("Accuracy: %.2f%%" % (accuracy * 100.0))
+print("Recall: %.2f%%" % (recall * 100.0))
 
-    mlflow.end_run()
+
+    
+    
