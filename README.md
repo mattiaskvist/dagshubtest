@@ -113,3 +113,15 @@ Om du i DagsHub väljer "Experiments" och sedan klickar på kodsymbolen för en 
 ```python
 mlflow.log_artifact("<namn på filen som du kör>")
 ```
+
+## Multiclass classification
+
+Här följde jag följande tutorial: [tutorial](https://forecastegy.com/posts/xgboost-multiclass-classification-python/) för att skriva filen multiclass_test.py
+
+För att köra multiclass_test.py måste du ladda ner data här: [wine](https://www.kaggle.com/datasets/uciml/red-wine-quality-cortez-et-al-2009?select=winequality-red.csv). Kopiera datan och spara som 'winequality-red.csv' i repot. Namnet är viktigt att det är exakt, annars kommer inte koden att fungera och den kommer inte att ignoreras av git (vilket vi vill).
+
+Denna fungerar ungefär likadant som diabetes_test.py, men modellen måste gissa vilket utan 13 vin det är, jämfört med sant eller falskt som diabetes_test.py gör. Därför är det en multiclass classification.
+
+Multiclass clasification skilljer sig från binary classification genom att den använder sig av en annan loss function, eller objective function. En loss function används för att beräkna skillnaden mellan predictions och den faktiska datan. Vi använder oss här av "multi:softprob" som är en objective function som används för multiclass classification. Den ger oss en sannolikhet för varje klass(möjlig output). Den klass med högst sannolikhet blir den som modellen gissar på.
+
+Denna fil använder pandas för att läsa in datan, vilket även Rasmus gjorde i sin demo. Här läses också datan in från en csv-fil, men kommer att jobba med en sql-fil som vi kommer querya.

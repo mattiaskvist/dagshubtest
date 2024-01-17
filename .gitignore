@@ -2,3 +2,4 @@ env/
 pima-indians-diabetes.csv
 .env
 data
+winequality-red.csv

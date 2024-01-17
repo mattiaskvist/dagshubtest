@@ -19,46 +19,47 @@ from mlflow.tracking import MlflowClient
 
 dagshub.init(repo_owner=repo_owner_var, repo_name=repo_name_var, mlflow=True)
 mlflow.xgboost.autolog(log_input_examples=False, log_datasets=False, log_model_signatures=True, disable=False)
+mlflow.set_experiment("multiclass_test")
 with mlflow.start_run() as run:
-    # Load libraries
-    from numpy import loadtxt
+    import xgboost as xgb
+    import pandas as pd
+    from sklearn.model_selection import train_test_split    
     from xgboost import XGBClassifier
-    from sklearn.model_selection import train_test_split
-    from sklearn.metrics import accuracy_score, recall_score, precision_score
+    from sklearn.metrics import accuracy_score, recall_score, precision_score, classification_report
+ 
+    # Load data
+    data = pd.read_csv("winequality-red.csv")
+    
+    # Separate target variable
+    X = data.drop('quality', axis=1)
+    y = data['quality'] - data['quality'].min()
 
-    # load data
-    dataset = loadtxt('pima-indians-diabetes.csv', delimiter=",")
+    # Split the data into training and test sets
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
 
-    # split data into X and y
-    X = dataset[:,0:8]
-    Y = dataset[:,8]
+    # Create an instance of the XGBClassifier
+    model = XGBClassifier(objective='multi:softprob')
 
-    # split data into train and test sets
-    seed = 7
-    test_size = 0.33
-    X_train, X_test, y_train, y_test = train_test_split(X, Y, test_size=test_size, random_state=seed)
-
-    # fit model on training data
-    model = XGBClassifier(use_label_encoder=False, eval_metric="logloss")
+    # Fit the model to the training data
     model.fit(X_train, y_train)
-
-    # make predictions for test data
+    
+    # Make predictions
     y_pred = model.predict(X_test)
-
-    # evaluate predictions
+    
+    # Evaluate the model
     accuracy = accuracy_score(y_test, y_pred)
-    recall = recall_score(y_test, y_pred)
-    precision = precision_score(y_test, y_pred)
-
+    recall = recall_score(y_test, y_pred, average='weighted')
+    precision = precision_score(y_test, y_pred, average='weighted')
+    
     print("Accuracy: %.2f%%" % (accuracy * 100.0))
     print("Recall: %.2f%%" % (recall * 100.0))
     print("Precision: %.2f%%" % (precision * 100.0))
-    run_id = run.info.run_id
-
-    mlflow.end_run()
+    print(classification_report(y_test, y_pred))
     
-    # Log metrics
-    # Här loggar vi metrics till MLflow. Accuracy, recall och precision loggas automatiskt innan
-    MlflowClient().log_artifact(run_id, 'xgboost_test.py')
+    run_id = run.info.run_id
+    
+    mlflow.end_run()
 
+    # Log own metrics and artifacts
+    MlflowClient().log_artifact(run_id, 'multiclass_test.py')
     
