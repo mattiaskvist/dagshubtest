@@ -51,5 +51,6 @@ with mlflow.start_run():
 
     mlflow.log_param('accuracy', accuracy)
     mlflow.log_metric("metric name", 1)
+    mlflow.log_artifact("xgboost_test.py")
 
     mlflow.end_run()
