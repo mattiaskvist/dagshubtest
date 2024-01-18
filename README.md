@@ -94,7 +94,9 @@ På Windows kan det vara enklare att installera allt manuellt.
 
 Om ni får ett felmeddelande "ModuleNotFoundError: No module named 'pkg_resources'" testa att köra:
 
-``` pip install setuptools ```
+```bash
+pip install setuptools 
+```
 
 #### Hämta data
 
@@ -104,7 +106,7 @@ Ladda ner data här: [diabetes](https://raw.githubusercontent.com/jbrownlee/Data
 
 För att kunna pusha till dagshub behöver du skapa en .env fil i repot. I denna fil behöver du lägga till dina credentials. Detta gör du genom att i filen skriva:
 
-```
+```python
 DAGSHUB_REPO_OWNER = 'mattiaskvist'
 DAGSHUB_REPO_NAME = 'dagshubtest' 
 DAGSHUB_TOKEN = '<din token>'
@@ -194,7 +196,6 @@ Denna fungerar ungefär likadant som diabetes_test.py, men modellen måste gissa
 Multiclass clasification skilljer sig från binary classification genom att den använder sig av en annan loss function, eller objective function. En loss function används för att beräkna skillnaden mellan predictions och den faktiska datan. Vi använder oss här av "multi:softprob" som är en objective function som används för multiclass classification. Den ger oss en sannolikhet för varje klass(möjlig output). Den klass med högst sannolikhet blir den som modellen gissar på.
 
 Denna fil använder pandas för att läsa in datan, vilket även Rasmus gjorde i sin demo. Här läses också datan in från en csv-fil, men kommer att jobba med en sql-fil som vi kommer querya.
-
 
 ## MYSQL
 
@@ -294,3 +295,9 @@ Output:
 1    Jane Smith    jane.smith@example.com   2
 2  Mike Johnson  mike.johnson@example.com   3
 ```
+
+### DataGrip
+
+Den som vill använda DataGrip för att utforska databasen och prova querys kan göra det. Det är gratis för studenter. Du kan ladda ner det [här](https://www.jetbrains.com/datagrip/). Du kan behöva registrera dig [här](https://www.jetbrains.com/community/education/#students/) som student för att få en licens. Följ guiden här för att ansluta till din MySQL-databas: [guide](https://www.jetbrains.com/help/datagrip/mysql.html).
+
+Det går också att använda DataGrip till att automatiskt generera UML-diagram från en databas. Detta kan vara bra för att få en överblick över databasen. En guide för hur du gör detta hittar du [här](https://www.jetbrains.com/help/datagrip/creating-diagrams.html#export_diagrams_to_files).
