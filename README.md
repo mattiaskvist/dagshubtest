@@ -85,6 +85,7 @@ pip install scikit-learn
 pip install numpy
 pip install python-dotenv 
 pip install pandas
+pip install mysql-connector-python
 ```
 
 Dessa behöver installeras manuellt ifall man inte kör i en environment. Det kan skapa problem för du kan behöva lägga till dem i din specifika path, och kan vara krångligt. Därför rekommenderar jag att du kör i en environment.
@@ -242,4 +243,54 @@ Du borde nu ha skapat en databas med tabeller och lite data. För att se att tab
 
 ```bash
 SHOW TABLES;
+```
+
+För att querya databasen, se till att du har installerat mysql-connector-python. Detta kan du göra genom att köra:
+
+```bash
+pip install mysql-connector-python
+```
+
+eller genom att i en environment köra:
+
+```bash
+pip install -r requirements.txt
+```
+
+Nu har jag skapat en databas i MySQL som heter "data". Jag har importerat en tabell och data från filen ```table.sql``` genom att göra som jag beskrivit ovan. Här är ett exempel på hur du kan querya databasen och få ut datan i en pandas dataframe. Kom ihåg att du måste ha en .env fil med dina credentials, där du har lagt till ditt lösenord för MySQL:
+
+```python
+import mysql.connector
+import pandas as pd
+from dotenv import load_dotenv
+load_dotenv()
+
+import os
+password_var = os.getenv("MYSQL_PASSWORD")
+
+mydb = mysql.connector.connect(
+  host="localhost",
+  user="root",
+  password=password_var,
+  database="data"
+)
+
+mycursor = mydb.cursor()
+
+mycursor.execute("SELECT name, email, id FROM users")
+
+myresult = mycursor.fetchall()
+
+df = pd.DataFrame(myresult, columns=['name', 'email', 'id'])
+
+print(df)
+```
+
+Output:
+
+```bash
+           name                     email  id
+0      John Doe      john.doe@example.com   1
+1    Jane Smith    jane.smith@example.com   2
+2  Mike Johnson  mike.johnson@example.com   3
 ```
