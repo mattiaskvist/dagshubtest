@@ -89,6 +89,12 @@ pip install pandas
 
 Dessa behöver installeras manuellt ifall man inte kör i en environment. Det kan skapa problem för du kan behöva lägga till dem i din specifika path, och kan vara krångligt. Därför rekommenderar jag att du kör i en environment.
 
+På Windows kan det vara enklare att installera allt manuellt.
+
+Om ni får ett felmeddelande "ModuleNotFoundError: No module named 'pkg_resources'" testa att köra:
+
+``` pip install setuptools ```
+
 #### Hämta data
 
 Ladda ner data här: [diabetes](https://raw.githubusercontent.com/jbrownlee/Datasets/master/pima-indians-diabetes.data.csv). Kopiera och lägg i repot som 'pima-indians-diabetes.csv'. Namnet är viktigt att det är exakt, annars kommer inte koden att fungera och den kommer inte att ignoreras av git (vilket vi vill).
