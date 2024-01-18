@@ -91,7 +91,7 @@ Dessa behöver installeras manuellt ifall man inte kör i en environment. Det ka
 
 #### Hämta data
 
-Ladda ner data här: [diabetes](https://raw.githubusercontent.com/jbrownlee/Datasets/master/pima-indians-diabetes.data.csv). Kopiera och lägg i repot som 'pima-indians-diabetes.data.csv'. Namnet är viktigt att det är exakt, annars kommer inte koden att fungera och den kommer inte att ignoreras av git (vilket vi vill).
+Ladda ner data här: [diabetes](https://raw.githubusercontent.com/jbrownlee/Datasets/master/pima-indians-diabetes.data.csv). Kopiera och lägg i repot som 'pima-indians-diabetes.csv'. Namnet är viktigt att det är exakt, annars kommer inte koden att fungera och den kommer inte att ignoreras av git (vilket vi vill).
 
 #### Set up credentials
 
