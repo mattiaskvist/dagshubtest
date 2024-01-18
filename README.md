@@ -193,3 +193,53 @@ Denna fungerar ungefär likadant som diabetes_test.py, men modellen måste gissa
 Multiclass clasification skilljer sig från binary classification genom att den använder sig av en annan loss function, eller objective function. En loss function används för att beräkna skillnaden mellan predictions och den faktiska datan. Vi använder oss här av "multi:softprob" som är en objective function som används för multiclass classification. Den ger oss en sannolikhet för varje klass(möjlig output). Den klass med högst sannolikhet blir den som modellen gissar på.
 
 Denna fil använder pandas för att läsa in datan, vilket även Rasmus gjorde i sin demo. Här läses också datan in från en csv-fil, men kommer att jobba med en sql-fil som vi kommer querya.
+
+
+## MYSQL
+
+För att kunna köra querys från en lokal databas behöver du installera mysql. Detta kan du göra [här](https://dev.mysql.com/downloads/installer/). En guide för mac hittar du [här](https://flaviocopes.com/mysql-how-to-install/), och en för windows [här](https://www.w3schools.com/mysql/mysql_install_windows.asp).
+
+Du kan stöta på problem om mysql inte är tillags till din path (iallafall på mac). Detta kan du lösa genom att lägga till mysql till din path. En guide för hur du gör detta på mac hittar du [här](https://stackoverflow.com/questions/10577374/mysql-command-not-found-in-os-x-10-7). För windows hittar du en guide [här](https://stackoverflow.com/questions/44272416/how-to-add-a-folder-to-path-environment-variable-in-windows-10-with-screensho).
+
+När du installerat mysql behöver du skapa en databas. Detta kan du göra genom att köra följande kommando i terminalen:
+
+```bash
+mysql -u root -p
+```
+
+Logga sedan in med det lösenord du angav när du installerade mysql. Skapa en databas genom att köra:
+
+```bash
+CREATE DATABASE <databasnamn>;
+```
+
+Navigera till databasen genom att köra:
+
+```bash
+USE <databasnamn>;
+```
+
+Du kan sedan skapa en tabell genom att köra exempelvis:
+
+```bash
+CREATE TABLE cats
+(
+  id              INT unsigned NOT NULL AUTO_INCREMENT, # Unique ID for the record
+  name            VARCHAR(150) NOT NULL,                # Name of the cat
+  owner           VARCHAR(150) NOT NULL,                # Owner of the cat
+  birth           DATE NOT NULL,                        # Birthday of the cat
+  PRIMARY KEY     (id)                                  # Make the id the primary key
+);
+```
+
+För att skapa tabeller och fylla dem med data genom att köra en sql-fil, anslut och navigera till databasen du vill skapa tabellerna i. Kör sedan:
+
+```bash
+source <path till sql-fil>
+```
+
+Du borde nu ha skapat en databas med tabeller och lite data. För att se att tabellerna skapats, kör:
+
+```bash
+SHOW TABLES;
+```
