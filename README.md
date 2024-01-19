@@ -203,6 +203,14 @@ För att kunna köra querys från en lokal databas behöver du installera mysql.
 
 Du kan stöta på problem om mysql inte är tillags till din path (iallafall på mac). Detta kan du lösa genom att lägga till mysql till din path. En guide för hur du gör detta på mac hittar du [här](https://stackoverflow.com/questions/10577374/mysql-command-not-found-in-os-x-10-7). För windows hittar du en guide [här](https://stackoverflow.com/questions/44272416/how-to-add-a-folder-to-path-environment-variable-in-windows-10-with-screensho).
 
+Det som löste problemet på Mac var att lägga till följande i min ```.zshrc``` fil (motsvarande ```.bashrc``` om du använder bash):
+
+```bash
+export PATH=${PATH}:/usr/local/mysql/bin
+```
+
+```bash
+
 När du installerat mysql behöver du skapa en databas. Detta kan du göra genom att köra följande kommando i terminalen:
 
 ```bash
