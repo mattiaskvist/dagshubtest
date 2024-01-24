@@ -185,6 +185,25 @@ Om du i DagsHub väljer "Experiments" och sedan klickar på kodsymbolen för en 
 mlflow.log_artifact("<namn på filen som du kör>")
 ```
 
+#### Sortera experiment
+
+För att sortera in ett experiment i rätt experimentgrupp, t.ex ```twoPlayersOneChamp```, lägg till följande kod i din fil:
+
+```python
+mlflow.set_experiment("twoPlayersOneChamp")
+```
+
+Det kan se ut som följande:
+
+```python
+....
+mlflow.xgboost.autolog(log_input_examples=False, log_datasets=False, log_model_signatures=True, disable=False)
+mlflow.set_experiment("<namn på experimentgrupp>")
+with mlflow.start_run() as run:
+      ....
+      ....
+```
+
 ## Multiclass classification
 
 Här följde jag följande tutorial: [tutorial](https://forecastegy.com/posts/xgboost-multiclass-classification-python/) för att skriva filen multiclass_test.py
