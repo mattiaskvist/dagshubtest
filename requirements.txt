@@ -47,7 +47,7 @@ oauthlib==3.2.2
 packaging==23.2
 pandas==2.1.4
 pathvalidate==3.0.0
-pillow==10.2.0
+pillow==10.3.0
 protobuf==4.25.2
 pyarrow==14.0.2
 Pygments==2.17.2
